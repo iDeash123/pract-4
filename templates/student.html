@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Студент — Студентський портал{% endblock %}
+
+{% block content %}
+{% if student %}
+<h1>{{ student.name }}</h1>
+
+<div class="student-card">
+    <p><strong>Група:</strong> {{ student.group }}</p>
+    <p><strong>Курс:</strong> {{ student.course }}</p>
+    <p><strong>Середній бал:</strong> {{ student.gpa }}</p>
+    <p>
+        <strong>Статус:</strong>
+        {% if student.is_active %}
+        <span class="status-active">Активний</span>
+        {% else %}
+        <span class="status-inactive">Неактивний</span>
+        {% endif %}
+    </p>
+
+    <p>
+        <strong>Оцінка успішності:</strong>
+        {% if student.gpa >= 4.5 %}
+        <span class="gpa-excellent">Відмінник</span>
+        {% elif student.gpa >= 3.5 %}
+        <span class="gpa-good">Добре</span>
+        {% else %}
+        <span class="gpa-improve">Потрібно покращити</span>
+        {% endif %}
+    </p>
+
+    <h2>Предмети</h2>
+    <ul>
+        {% for subject in student.subjects %}
+        <li>{{ subject }}</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<a href="{{ url_for('students_list') }}" class="btn">← Повернутися до списку</a>
+{% else %}
+<div class="error-message">
+    <h2>Студента не знайдено</h2>
+    <p>Студента з таким ID не існує.</p>
+    <a href="{{ url_for('students_list') }}" class="btn">← Повернутися до списку студентів</a>
+</div>
+{% endif %}
+{% endblock %}

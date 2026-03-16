@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Розклад — Студентський портал{% endblock %}
+
+{% block content %}
+<h1>Розклад занять</h1>
+
+{% for day, lessons in schedule.items() %}
+<div class="schedule-day">
+    <h2>{{ day }}</h2>
+
+    {% if lessons %}
+    <table>
+        <thead>
+            <tr>
+                <th>Час</th>
+                <th>Предмет</th>
+                <th>Тип</th>
+                <th>Аудиторія</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for lesson in lessons %}
+            <tr>
+                <td>{{ lesson.time }}</td>
+                <td>{{ lesson.subject }}</td>
+                <td>{{ lesson.type | capitalize }}</td>
+                <td>{{ lesson.room }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="empty-message">Вихідний / Вікно</p>
+    {% endif %}
+</div>
+{% endfor %}
+{% endblock %}
